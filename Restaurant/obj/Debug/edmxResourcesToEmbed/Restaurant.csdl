@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="restaurant_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="account">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="account_type_id" Type="Int32" Nullable="false" />
+    <Property Name="table_id" Type="Int32" />
+    <NavigationProperty Name="table" Relationship="Self.fk_account_table1" FromRole="account" ToRole="table" />
+    <NavigationProperty Name="account_type" Relationship="Self.fk_user_user_type" FromRole="account" ToRole="account_type" />
+  </EntityType>
+  <EntityType Name="account_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="accounts" Relationship="Self.fk_user_user_type" FromRole="account_type" ToRole="account" />
+  </EntityType>
+  <EntityType Name="item">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="item_type_id" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="item_type" Relationship="Self.fk_item_item_type1" FromRole="item" ToRole="item_type" />
+    <NavigationProperty Name="order_item" Relationship="Self.fk_order_item_item1" FromRole="item" ToRole="order_item" />
+  </EntityType>
+  <EntityType Name="item_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="items" Relationship="Self.fk_item_item_type1" FromRole="item_type" ToRole="item" />
+  </EntityType>
+  <EntityType Name="order">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date_and_time" Type="DateTime" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="taken" Type="SByte" Nullable="false" />
+    <Property Name="total_price" Type="Decimal" Nullable="false" />
+    <Property Name="canceled" Type="SByte" Nullable="false" />
+    <NavigationProperty Name="order_item" Relationship="Self.fk_order_item_order1" FromRole="order" ToRole="order_item" />
+  </EntityType>
+  <EntityType Name="order_item">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Decimal" Nullable="false" />
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="item_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="item" Relationship="Self.fk_order_item_item1" FromRole="order_item" ToRole="item" />
+    <NavigationProperty Name="order" Relationship="Self.fk_order_item_order1" FromRole="order_item" ToRole="order" />
+  </EntityType>
+  <EntityType Name="table">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="number" Type="Int32" Nullable="false" />
+    <Property Name="size" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="accounts" Relationship="Self.fk_account_table1" FromRole="table" ToRole="account" />
+  </EntityType>
+  <Association Name="fk_account_table1">
+    <End Role="table" Type="Self.table" Multiplicity="0..1" />
+    <End Role="account" Type="Self.account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="table">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="account">
+        <PropertyRef Name="table_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_user_user_type">
+    <End Role="account_type" Type="Self.account_type" Multiplicity="1" />
+    <End Role="account" Type="Self.account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="account">
+        <PropertyRef Name="account_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_item_item_type1">
+    <End Role="item_type" Type="Self.item_type" Multiplicity="1" />
+    <End Role="item" Type="Self.item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="item">
+        <PropertyRef Name="item_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_order_item_item1">
+    <End Role="item" Type="Self.item" Multiplicity="1" />
+    <End Role="order_item" Type="Self.order_item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="item">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="order_item">
+        <PropertyRef Name="item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_order_item_order1">
+    <End Role="order" Type="Self.order" Multiplicity="1" />
+    <End Role="order_item" Type="Self.order_item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="order_item">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="restaurant_dbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="accounts" EntityType="Self.account" />
+    <EntitySet Name="account_type" EntityType="Self.account_type" />
+    <EntitySet Name="items" EntityType="Self.item" />
+    <EntitySet Name="item_type" EntityType="Self.item_type" />
+    <EntitySet Name="orders" EntityType="Self.order" />
+    <EntitySet Name="order_item" EntityType="Self.order_item" />
+    <EntitySet Name="tables" EntityType="Self.table" />
+    <AssociationSet Name="fk_account_table1" Association="Self.fk_account_table1">
+      <End Role="table" EntitySet="tables" />
+      <End Role="account" EntitySet="accounts" />
+    </AssociationSet>
+    <AssociationSet Name="fk_user_user_type" Association="Self.fk_user_user_type">
+      <End Role="account_type" EntitySet="account_type" />
+      <End Role="account" EntitySet="accounts" />
+    </AssociationSet>
+    <AssociationSet Name="fk_item_item_type1" Association="Self.fk_item_item_type1">
+      <End Role="item_type" EntitySet="item_type" />
+      <End Role="item" EntitySet="items" />
+    </AssociationSet>
+    <AssociationSet Name="fk_order_item_item1" Association="Self.fk_order_item_item1">
+      <End Role="item" EntitySet="items" />
+      <End Role="order_item" EntitySet="order_item" />
+    </AssociationSet>
+    <AssociationSet Name="fk_order_item_order1" Association="Self.fk_order_item_order1">
+      <End Role="order" EntitySet="orders" />
+      <End Role="order_item" EntitySet="order_item" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
