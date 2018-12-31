@@ -30,9 +30,9 @@
     <Property Name="ingredients" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="image_path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="ItemType_id" Type="Int32" Nullable="false" />
+    <Property Name="active" Type="SByte" Nullable="false" />
     <NavigationProperty Name="itemtype" Relationship="Self.fk_Item_ItemType1" FromRole="item" ToRole="itemtype" />
     <NavigationProperty Name="orderitem" Relationship="Self.fk_OrderItem_Item1" FromRole="item" ToRole="orderitem" />
-    <Property Name="active" Type="SByte" Nullable="false" />
   </EntityType>
   <EntityType Name="itemtype">
     <Key>
@@ -55,20 +55,8 @@
     <NavigationProperty Name="table" Relationship="Self.fk_Order_Table1" FromRole="order" ToRole="table" />
     <NavigationProperty Name="orderitem" Relationship="Self.fk_OrderItem_Order1" FromRole="order" ToRole="orderitem" />
   </EntityType>
-  <EntityType Name="table">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="number" Type="Int32" Nullable="false" />
-    <Property Name="Account_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="account" Relationship="Self.fk_Table_Account1" FromRole="table" ToRole="account" />
-    <NavigationProperty Name="order" Relationship="Self.fk_Order_Table1" FromRole="table" ToRole="order" />
-  </EntityType>
   <EntityType Name="orderitem">
     <Key>
-      <PropertyRef Name="quantity" />
-      <PropertyRef Name="price" />
       <PropertyRef Name="Order_id" />
       <PropertyRef Name="Item_id" />
     </Key>
@@ -78,6 +66,16 @@
     <Property Name="Item_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="item" Relationship="Self.fk_OrderItem_Item1" FromRole="orderitem" ToRole="item" />
     <NavigationProperty Name="order" Relationship="Self.fk_OrderItem_Order1" FromRole="orderitem" ToRole="order" />
+  </EntityType>
+  <EntityType Name="table">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="number" Type="Int32" Nullable="false" />
+    <Property Name="Account_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="account" Relationship="Self.fk_Table_Account1" FromRole="table" ToRole="account" />
+    <NavigationProperty Name="order" Relationship="Self.fk_Order_Table1" FromRole="table" ToRole="order" />
   </EntityType>
   <Association Name="fk_Account_AccountType">
     <End Role="accounttype" Type="Self.accounttype" Multiplicity="1" />
@@ -157,8 +155,8 @@
     <EntitySet Name="item" EntityType="Self.item" />
     <EntitySet Name="itemtype" EntityType="Self.itemtype" />
     <EntitySet Name="order" EntityType="Self.order" />
-    <EntitySet Name="table" EntityType="Self.table" />
     <EntitySet Name="orderitem" EntityType="Self.orderitem" />
+    <EntitySet Name="table" EntityType="Self.table" />
     <AssociationSet Name="fk_Account_AccountType" Association="Self.fk_Account_AccountType">
       <End Role="accounttype" EntitySet="accounttype" />
       <End Role="account" EntitySet="account" />

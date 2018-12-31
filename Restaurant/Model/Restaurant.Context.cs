@@ -30,7 +30,7 @@ namespace Restaurant.Model
         public virtual DbSet<item> item { get; set; }
         public virtual DbSet<itemtype> itemtype { get; set; }
         public virtual DbSet<order> order { get; set; }
-        public virtual DbSet<table> table { get; set; }
         public virtual DbSet<orderitem> orderitem { get; set; }
+        public virtual DbSet<table> table { get; set; }
     }
 }

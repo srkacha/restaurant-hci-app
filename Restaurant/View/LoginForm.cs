@@ -34,7 +34,7 @@ namespace Restaurant.View
             }
             else
             {
-                MessageBox.Show("Korisnicko ime ili lozinka nisu ispravni. Pokusajte ponovno");
+                new InfoForm("Korisnicko ime ili lozinka nisu ispravni. Pokusajte ponovno").ShowDialog();
                 txtPassword.Clear();
                 txtUsername.Clear();
             }

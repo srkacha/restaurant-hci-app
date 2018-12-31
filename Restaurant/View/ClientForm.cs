@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Restaurant.Model;
@@ -14,8 +15,12 @@ namespace Restaurant.View
 {
     public partial class ClientForm : Form
     {
+        List<OrderItemCustom> orderItems = new List<OrderItemCustom>();
         private ItemUtil itemUtil = new ItemUtil();
+        private OrderUtil orderUtil = new OrderUtil();
         private table loggedInTable = null;
+
+        public static int lastOrderId = -1;
 
         public ClientForm()
         {
@@ -29,6 +34,24 @@ namespace Restaurant.View
             {
                 Environment.Exit(0);
             }
+
+            //starting the order checker thread
+            startOrderCheckerThread();
+        }
+
+        public void startOrderCheckerThread()
+        {
+            new Thread(() =>
+            {
+                while (true)
+                {
+                    if (orderUtil.isOrderAccepted(lastOrderId))
+                    {
+                        new InfoForm($"Narudzba sa brojem {lastOrderId} je prihvacena.").ShowDialog();
+                        lastOrderId = -1;
+                    }
+                }
+            }).Start();
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
@@ -41,6 +64,7 @@ namespace Restaurant.View
         {
             pnlSelection.Location = new Point(pnlSelection.Location.X, btnOrder.Location.Y);
             tcTabs.SelectedIndex = 1;
+            updateTotalPrice();
         }
 
         private void btnInfo_Click(object sender, EventArgs e)
@@ -60,7 +84,7 @@ namespace Restaurant.View
             lblTableNumber.Text = $"Sto broj {loggedInTable.number}";
 
             lvFood.Items.Clear();
-            List<item> items = itemUtil.getAllItems();
+            List<item> items = itemUtil.getAllActiveItems();
             foreach(var item in items)
             {
                 ListViewItem lvitem = new ListViewItem(item.name);
@@ -103,6 +127,134 @@ namespace Restaurant.View
                 }
 
             }
+        }
+
+        private void btnItemAdd_Click(object sender, EventArgs e)
+        {
+            addOrderItem();
+        }
+
+        private void addOrderItem()
+        {
+            if (lvFood.SelectedItems.Count == 1)
+            {
+                item selectedItem = (item)lvFood.SelectedItems[0].Tag;
+                int quantity = (int)nudItemQuantity.Value;
+                bool itemFound = false;
+                foreach(var item in orderItemCustomBindingSource)
+                {
+                    if(((OrderItemCustom)item).id == selectedItem.id)
+                    {
+                        ((OrderItemCustom)item).quantity += quantity;
+                        ((OrderItemCustom)item).totalPrice += quantity * ((OrderItemCustom)item).price;
+                        itemFound = true;
+                    }
+                }
+
+                if (!itemFound)
+                {
+                    OrderItemCustom newItem = new OrderItemCustom
+                    {
+                        id = selectedItem.id,
+                        name = selectedItem.name,
+                        price = selectedItem.price,
+                        quantity = quantity,
+                        totalPrice = selectedItem.price * quantity
+                    };
+                    orderItemCustomBindingSource.Add(newItem);
+                }
+            }
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if(dgvOrderItems.SelectedRows.Count == 1)
+            {
+                DataGridViewRow selectedRow = dgvOrderItems.SelectedRows[0];
+                OrderItemCustom selectedItem = (OrderItemCustom)selectedRow.DataBoundItem;
+                nudOrderQuantity.Value = selectedItem.quantity;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dgvOrderItems.SelectedRows.Count == 1)
+            {
+                DataGridViewRow selectedRow = dgvOrderItems.SelectedRows[0];
+                OrderItemCustom selectedItem = (OrderItemCustom)selectedRow.DataBoundItem;
+                selectedItem.quantity = (int)nudOrderQuantity.Value;
+                selectedItem.totalPrice = selectedItem.price * selectedItem.quantity;
+                dgvOrderItems.Refresh();
+
+                updateTotalPrice();
+            }
+        }
+
+        private void btnRemoveItem_Click(object sender, EventArgs e)
+        {
+            if (dgvOrderItems.SelectedRows.Count == 1)
+            {
+                DataGridViewRow selectedRow = dgvOrderItems.SelectedRows[0];
+                OrderItemCustom selectedItem = (OrderItemCustom)selectedRow.DataBoundItem;
+                orderItemCustomBindingSource.Remove(selectedItem);
+                dgvOrderItems.Refresh();
+
+                updateTotalPrice();
+            }
+        }
+
+        private void updateTotalPrice()
+        {
+            //updating the total price label
+            decimal totalPrice = getTotalPrice();
+            lblTotalPrice.Text = $"{totalPrice} KM";
+        }
+
+        private decimal getTotalPrice()
+        {
+            decimal totalPrice = 0;
+            foreach (var item in orderItemCustomBindingSource)
+            {
+                totalPrice += ((OrderItemCustom)item).totalPrice;
+            }
+            return totalPrice;
+        }
+
+        private List<OrderItemCustom> getOrderItemsAsList()
+        {
+            List<OrderItemCustom> result = new List<OrderItemCustom>();
+            foreach(var item in orderItemCustomBindingSource)
+            {
+                result.Add((OrderItemCustom)item);
+            }
+            return result;
+        }
+
+        private void btnConfirmOrder_Click(object sender, EventArgs e)
+        {
+            if (orderItemCustomBindingSource.Count > 0)
+            {
+                int orderNumber = 0;
+                if ((orderNumber = createOrder()) > 0)
+                {
+                    new InfoForm($"Broj vase narudzbe je {orderNumber}. Prijatno!").ShowDialog();
+                    //setting the last order id
+                    lastOrderId = orderNumber;
+                    orderItemCustomBindingSource.Clear();
+                    updateTotalPrice();
+                }
+                else new InfoForm("Desio se problem sa kreiranjem narudzbe, molimo Vas pokusajte ponovno.").ShowDialog();
+            }
+            else new InfoForm("Morate imati bar jednu stavku narudzbe da biste uspjesno kreirali narudzbu.").ShowDialog();
+        }
+
+        private int createOrder()
+        {
+            //first we create the list
+            List<OrderItemCustom> orderItems = getOrderItemsAsList();
+            decimal totalPrice = getTotalPrice();
+            int tableId = loggedInTable.id;
+            return orderUtil.addOrder(orderItems, totalPrice, tableId);
         }
     }
 }

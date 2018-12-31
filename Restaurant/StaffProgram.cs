@@ -7,17 +7,17 @@ using Restaurant.View;
 
 namespace Restaurant
 {
-    static class Program
+    static class StaffProgram
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// The other main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ClientForm());
+            Application.Run(new StaffForm());
         }
     }
 }

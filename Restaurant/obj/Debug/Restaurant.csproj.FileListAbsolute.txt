@@ -18,3 +18,6 @@ C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni za
 C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni zadatak\Restaurant\Restaurant\obj\Debug\Restaurant.exe
 C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni zadatak\Restaurant\Restaurant\obj\Debug\Restaurant.pdb
 C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni zadatak\Restaurant\Restaurant\obj\Debug\Restaurant.csprojAssemblyReference.cache
+C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni zadatak\Restaurant\Restaurant\obj\Debug\Restaurant.View.InfoForm.resources
+C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni zadatak\Restaurant\Restaurant\obj\Debug\Restaurant.View.StaffLoginForm.resources
+C:\Faculty\CETVRTA GODINA\SEDMI SEMESTAR\INTERAKCIJA COVJEK RACUNAR\Projektni zadatak\Restaurant\Restaurant\obj\Debug\Restaurant.View.StaffForm.resources

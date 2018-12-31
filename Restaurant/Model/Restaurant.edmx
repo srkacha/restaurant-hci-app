@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="restaurantModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="restaurantModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="id" />
@@ -52,12 +52,8 @@
           <Property Name="accepted" Type="tinyint" Nullable="false" />
           <Property Name="Table_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.restaurant.orderitem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="orderitem">
           <Key>
-            <PropertyRef Name="quantity" />
-            <PropertyRef Name="price" />
             <PropertyRef Name="Order_id" />
             <PropertyRef Name="Item_id" />
           </Key>
@@ -152,15 +148,8 @@ warning 6002: The table/view 'def.restaurant.orderitem' does not have a primary 
           <EntitySet Name="item" EntityType="Self.item" Schema="restaurant" store:Type="Tables" />
           <EntitySet Name="itemtype" EntityType="Self.itemtype" Schema="restaurant" store:Type="Tables" />
           <EntitySet Name="order" EntityType="Self.order" Schema="restaurant" store:Type="Tables" />
+          <EntitySet Name="orderitem" EntityType="Self.orderitem" Schema="restaurant" store:Type="Tables" />
           <EntitySet Name="table" EntityType="Self.table" Schema="restaurant" store:Type="Tables" />
-          <EntitySet Name="orderitem" EntityType="Self.orderitem" store:Type="Tables" store:Schema="restaurant">
-            <DefiningQuery>SELECT
-`orderitem`.`quantity`, 
-`orderitem`.`price`, 
-`orderitem`.`Order_id`, 
-`orderitem`.`Item_id`
-FROM `orderitem` AS `orderitem`</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="fk_Account_AccountType" Association="Self.fk_Account_AccountType">
             <End Role="accounttype" EntitySet="accounttype" />
             <End Role="account" EntitySet="account" />
@@ -186,7 +175,8 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
             <End Role="table" EntitySet="table" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -220,9 +210,9 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
           <Property Name="ingredients" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="image_path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ItemType_id" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="SByte" Nullable="false" />
           <NavigationProperty Name="itemtype" Relationship="Self.fk_Item_ItemType1" FromRole="item" ToRole="itemtype" />
           <NavigationProperty Name="orderitem" Relationship="Self.fk_OrderItem_Item1" FromRole="item" ToRole="orderitem" />
-          <Property Name="active" Type="SByte" Nullable="false" />
         </EntityType>
         <EntityType Name="itemtype">
           <Key>
@@ -245,20 +235,8 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
           <NavigationProperty Name="table" Relationship="Self.fk_Order_Table1" FromRole="order" ToRole="table" />
           <NavigationProperty Name="orderitem" Relationship="Self.fk_OrderItem_Order1" FromRole="order" ToRole="orderitem" />
         </EntityType>
-        <EntityType Name="table">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="number" Type="Int32" Nullable="false" />
-          <Property Name="Account_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="account" Relationship="Self.fk_Table_Account1" FromRole="table" ToRole="account" />
-          <NavigationProperty Name="order" Relationship="Self.fk_Order_Table1" FromRole="table" ToRole="order" />
-        </EntityType>
         <EntityType Name="orderitem">
           <Key>
-            <PropertyRef Name="quantity" />
-            <PropertyRef Name="price" />
             <PropertyRef Name="Order_id" />
             <PropertyRef Name="Item_id" />
           </Key>
@@ -268,6 +246,16 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
           <Property Name="Item_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="item" Relationship="Self.fk_OrderItem_Item1" FromRole="orderitem" ToRole="item" />
           <NavigationProperty Name="order" Relationship="Self.fk_OrderItem_Order1" FromRole="orderitem" ToRole="order" />
+        </EntityType>
+        <EntityType Name="table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="Int32" Nullable="false" />
+          <Property Name="Account_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Self.fk_Table_Account1" FromRole="table" ToRole="account" />
+          <NavigationProperty Name="order" Relationship="Self.fk_Order_Table1" FromRole="table" ToRole="order" />
         </EntityType>
         <Association Name="fk_Account_AccountType">
           <End Role="accounttype" Type="Self.accounttype" Multiplicity="1" />
@@ -347,8 +335,8 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
           <EntitySet Name="item" EntityType="Self.item" />
           <EntitySet Name="itemtype" EntityType="Self.itemtype" />
           <EntitySet Name="order" EntityType="Self.order" />
-          <EntitySet Name="table" EntityType="Self.table" />
           <EntitySet Name="orderitem" EntityType="Self.orderitem" />
+          <EntitySet Name="table" EntityType="Self.table" />
           <AssociationSet Name="fk_Account_AccountType" Association="Self.fk_Account_AccountType">
             <End Role="accounttype" EntitySet="accounttype" />
             <End Role="account" EntitySet="account" />
@@ -401,7 +389,6 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
           <EntitySetMapping Name="item">
             <EntityTypeMapping TypeName="restaurantModel.item">
               <MappingFragment StoreEntitySet="item">
-                <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -409,6 +396,7 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
                 <ScalarProperty Name="ingredients" ColumnName="ingredients" />
                 <ScalarProperty Name="image_path" ColumnName="image_path" />
                 <ScalarProperty Name="ItemType_id" ColumnName="ItemType_id" />
+                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -432,15 +420,6 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="table">
-            <EntityTypeMapping TypeName="restaurantModel.table">
-              <MappingFragment StoreEntitySet="table">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="number" ColumnName="number" />
-                <ScalarProperty Name="Account_id" ColumnName="Account_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="orderitem">
             <EntityTypeMapping TypeName="restaurantModel.orderitem">
               <MappingFragment StoreEntitySet="orderitem">
@@ -448,6 +427,15 @@ FROM `orderitem` AS `orderitem`</DefiningQuery>
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="Order_id" ColumnName="Order_id" />
                 <ScalarProperty Name="Item_id" ColumnName="Item_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="table">
+            <EntityTypeMapping TypeName="restaurantModel.table">
+              <MappingFragment StoreEntitySet="table">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="Account_id" ColumnName="Account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

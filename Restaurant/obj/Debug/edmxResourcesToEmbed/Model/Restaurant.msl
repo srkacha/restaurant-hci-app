@@ -22,7 +22,6 @@
     <EntitySetMapping Name="item">
       <EntityTypeMapping TypeName="restaurantModel.item">
         <MappingFragment StoreEntitySet="item">
-          <ScalarProperty Name="active" ColumnName="active" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -30,6 +29,7 @@
           <ScalarProperty Name="ingredients" ColumnName="ingredients" />
           <ScalarProperty Name="image_path" ColumnName="image_path" />
           <ScalarProperty Name="ItemType_id" ColumnName="ItemType_id" />
+          <ScalarProperty Name="active" ColumnName="active" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -53,15 +53,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="table">
-      <EntityTypeMapping TypeName="restaurantModel.table">
-        <MappingFragment StoreEntitySet="table">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="number" ColumnName="number" />
-          <ScalarProperty Name="Account_id" ColumnName="Account_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="orderitem">
       <EntityTypeMapping TypeName="restaurantModel.orderitem">
         <MappingFragment StoreEntitySet="orderitem">
@@ -69,6 +60,15 @@
           <ScalarProperty Name="price" ColumnName="price" />
           <ScalarProperty Name="Order_id" ColumnName="Order_id" />
           <ScalarProperty Name="Item_id" ColumnName="Item_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="table">
+      <EntityTypeMapping TypeName="restaurantModel.table">
+        <MappingFragment StoreEntitySet="table">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="Account_id" ColumnName="Account_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
