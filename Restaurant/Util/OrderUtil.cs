@@ -66,6 +66,21 @@ namespace Restaurant.Util
             }
         }
 
+        public List<order> getNotAcceptedOrders()
+        {
+            using (restaurantEntities context = new restaurantEntities())
+            {
+                try
+                {
+                    return context.order.Where(o => o.accepted == 0).ToList();
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public bool isOrderAccepted(int orderId)
         {
             using(restaurantEntities context = new restaurantEntities())
@@ -82,6 +97,38 @@ namespace Restaurant.Util
                 catch
                 {
                     return false;
+                }
+            }
+        }
+
+        public bool acceptOrder(int orderId)
+        {
+            using(restaurantEntities context = new restaurantEntities())
+            {
+                try
+                {
+                    order requested = context.order.Where(o => o.id == orderId).First();
+                    requested.accepted = 1;
+                    context.SaveChanges();
+                    return true;
+                }catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public List<orderitem> getOrderItemsForOrderId(int orderId)
+        {
+            using (restaurantEntities context = new restaurantEntities())
+            {
+                try
+                {
+                    return context.orderitem.Where(o => o.Order_id == orderId).ToList();
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }

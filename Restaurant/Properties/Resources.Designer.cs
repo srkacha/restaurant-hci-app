@@ -63,6 +63,16 @@ namespace Restaurant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap addImageTemplate {
+            get {
+                object obj = ResourceManager.GetObject("addImageTemplate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_food_64 {
             get {
                 object obj = ResourceManager.GetObject("icons8-food-64", resourceCulture);
@@ -76,6 +86,16 @@ namespace Restaurant.Properties {
         internal static System.Drawing.Bitmap icons8_info_64 {
             get {
                 object obj = ResourceManager.GetObject("icons8-info-64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_plus_96 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-plus-96", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -20,7 +20,8 @@ namespace Restaurant.View
         private OrderUtil orderUtil = new OrderUtil();
         private table loggedInTable = null;
 
-        public static int lastOrderId = -1;
+        private static int lastOrderId = -1;
+        private static bool orderAcceptedPollingThreadActive = true;
 
         public ClientForm()
         {
@@ -43,13 +44,14 @@ namespace Restaurant.View
         {
             new Thread(() =>
             {
-                while (true)
+                while (orderAcceptedPollingThreadActive)
                 {
                     if (orderUtil.isOrderAccepted(lastOrderId))
                     {
                         new InfoForm($"Narudzba sa brojem {lastOrderId} je prihvacena.").ShowDialog();
                         lastOrderId = -1;
                     }
+                    Thread.Sleep(1000);
                 }
             }).Start();
         }
@@ -65,12 +67,6 @@ namespace Restaurant.View
             pnlSelection.Location = new Point(pnlSelection.Location.X, btnOrder.Location.Y);
             tcTabs.SelectedIndex = 1;
             updateTotalPrice();
-        }
-
-        private void btnInfo_Click(object sender, EventArgs e)
-        {
-            pnlSelection.Location = new Point(pnlSelection.Location.X, btnInfo.Location.Y);
-            tcTabs.SelectedIndex = 2;
         }
 
         private void ClientForm_Load(object sender, EventArgs e)
@@ -242,6 +238,7 @@ namespace Restaurant.View
                     lastOrderId = orderNumber;
                     orderItemCustomBindingSource.Clear();
                     updateTotalPrice();
+                    nudOrderQuantity.Value = 1;
                 }
                 else new InfoForm("Desio se problem sa kreiranjem narudzbe, molimo Vas pokusajte ponovno.").ShowDialog();
             }
@@ -255,6 +252,11 @@ namespace Restaurant.View
             decimal totalPrice = getTotalPrice();
             int tableId = loggedInTable.id;
             return orderUtil.addOrder(orderItems, totalPrice, tableId);
+        }
+
+        private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            orderAcceptedPollingThreadActive = false;
         }
     }
 }

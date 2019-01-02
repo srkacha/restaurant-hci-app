@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Restaurant.ClientProgram</StartupObject>
+    <StartupObject>Restaurant.StaffProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -116,6 +116,7 @@
     </Compile>
     <Compile Include="StaffProgram.cs" />
     <Compile Include="Util\AccountUtil.cs" />
+    <Compile Include="Util\ItemTypeUtil.cs" />
     <Compile Include="Util\ItemUtil.cs" />
     <Compile Include="Util\OrderUtil.cs" />
     <Compile Include="Util\TableUtil.cs" />
@@ -131,11 +132,23 @@
     <Compile Include="View\InfoForm.Designer.cs">
       <DependentUpon>InfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\ItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ItemForm.Designer.cs">
+      <DependentUpon>ItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrderDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\OrderDetailsForm.Designer.cs">
+      <DependentUpon>OrderDetailsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\StaffForm.cs">
       <SubType>Form</SubType>
@@ -160,8 +173,14 @@
     <EmbeddedResource Include="View\InfoForm.resx">
       <DependentUpon>InfoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\ItemForm.resx">
+      <DependentUpon>ItemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\OrderDetailsForm.resx">
+      <DependentUpon>OrderDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\StaffForm.resx">
       <DependentUpon>StaffForm.cs</DependentUpon>
@@ -197,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\" />
-    <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -205,6 +223,7 @@
   <ItemGroup>
     <Content Include="Resources\Icons\icons8-food-64.png" />
     <Content Include="Resources\Icons\icons8-info-64.png" />
+    <Content Include="Resources\Icons\icons8-plus-96.png" />
     <Content Include="Resources\Icons\icons8-plus-math-64.png" />
     <Content Include="Resources\Icons\icons8-restaurant-menu-64.png" />
     <Content Include="Resources\Icons\icons8-todo-list-64.png" />
@@ -220,6 +239,7 @@
       <DependentUpon>Restaurant.edmx</DependentUpon>
       <LastGenOutput>Restaurant.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\Images\addImageTemplate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
