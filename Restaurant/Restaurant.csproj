@@ -115,11 +115,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StaffProgram.cs" />
+    <Compile Include="Util\AccountTypeUtil.cs" />
     <Compile Include="Util\AccountUtil.cs" />
     <Compile Include="Util\ItemTypeUtil.cs" />
     <Compile Include="Util\ItemUtil.cs" />
     <Compile Include="Util\OrderUtil.cs" />
     <Compile Include="Util\TableUtil.cs" />
+    <Compile Include="View\AccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\AccountForm.Designer.cs">
+      <DependentUpon>AccountForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\ClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +157,12 @@
     <Compile Include="View\OrderDetailsForm.Designer.cs">
       <DependentUpon>OrderDetailsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\StaffForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +180,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\AccountForm.resx">
+      <DependentUpon>AccountForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\ClientForm.resx">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +198,9 @@
     <EmbeddedResource Include="View\OrderDetailsForm.resx">
       <DependentUpon>OrderDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\StaffForm.resx">
       <DependentUpon>StaffForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +208,7 @@
       <DependentUpon>StaffLoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Restaurant.Model.account.datasource" />
     <None Include="Properties\DataSources\Restaurant.Model.item.datasource" />
     <None Include="Properties\DataSources\Restaurant.Model.order.datasource" />
     <None Include="Properties\DataSources\Restaurant.Model.OrderItemCustom.datasource" />

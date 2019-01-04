@@ -8,6 +8,7 @@
     <Property Name="username" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="AccountType_id" Type="int" Nullable="false" />
+    <Property Name="active" Type="tinyint" Nullable="false" />
   </EntityType>
   <EntityType Name="accounttype">
     <Key>

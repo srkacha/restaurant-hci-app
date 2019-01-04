@@ -10,6 +10,7 @@
     <Property Name="AccountType_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="accounttype" Relationship="Self.fk_Account_AccountType" FromRole="account" ToRole="accounttype" />
     <NavigationProperty Name="table" Relationship="Self.fk_Table_Account1" FromRole="account" ToRole="table" />
+    <Property Name="active" Type="SByte" Nullable="false" />
   </EntityType>
   <EntityType Name="accounttype">
     <Key>

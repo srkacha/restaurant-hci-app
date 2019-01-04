@@ -38,6 +38,7 @@
             this.nudItemPrice = new System.Windows.Forms.NumericUpDown();
             this.cmbItemType = new System.Windows.Forms.ComboBox();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.btnReset = new System.Windows.Forms.Button();
             this.btnActivateItem = new System.Windows.Forms.Button();
             this.pbItemImage = new System.Windows.Forms.PictureBox();
             this.lblNameValid = new System.Windows.Forms.Label();
@@ -45,7 +46,6 @@
             this.lblPriceValid = new System.Windows.Forms.Label();
             this.lblTypeValid = new System.Windows.Forms.Label();
             this.lblImageValid = new System.Windows.Forms.Label();
-            this.btnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudItemPrice)).BeginInit();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbItemImage)).BeginInit();
@@ -167,6 +167,23 @@
             this.panel7.Size = new System.Drawing.Size(776, 100);
             this.panel7.TabIndex = 29;
             // 
+            // btnReset
+            // 
+            this.btnReset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnReset.FlatAppearance.BorderSize = 0;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.Font = new System.Drawing.Font("Century Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReset.Location = new System.Drawing.Point(92, 27);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(301, 53);
+            this.btnReset.TabIndex = 7;
+            this.btnReset.Text = "Resetuj vrijednosti";
+            this.btnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnReset.UseVisualStyleBackColor = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // btnActivateItem
             // 
             this.btnActivateItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -257,23 +274,6 @@
             this.lblImageValid.TabIndex = 35;
             this.lblImageValid.Text = "Morate odabrati sliku";
             // 
-            // btnReset
-            // 
-            this.btnReset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnReset.FlatAppearance.BorderSize = 0;
-            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReset.Font = new System.Drawing.Font("Century Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReset.Location = new System.Drawing.Point(92, 27);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(301, 53);
-            this.btnReset.TabIndex = 7;
-            this.btnReset.Text = "Resetuj vrijednosti";
-            this.btnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnReset.UseVisualStyleBackColor = false;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
             // ItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -297,6 +297,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ItemForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

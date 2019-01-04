@@ -4,6 +4,7 @@
     <EntitySetMapping Name="account">
       <EntityTypeMapping TypeName="restaurantModel.account">
         <MappingFragment StoreEntitySet="account">
+          <ScalarProperty Name="active" ColumnName="active" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="password" ColumnName="password" />

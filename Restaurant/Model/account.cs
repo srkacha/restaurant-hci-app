@@ -24,6 +24,7 @@ namespace Restaurant.Model
         public string username { get; set; }
         public string password { get; set; }
         public int AccountType_id { get; set; }
+        public sbyte active { get; set; }
     
         public virtual accounttype accounttype { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

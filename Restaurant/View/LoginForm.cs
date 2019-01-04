@@ -26,7 +26,7 @@ namespace Restaurant.View
         private void btnLogin_Click(object sender, EventArgs e)
         {
             account loginAttempt = accountUtil.getAccountForUsernameAndPassword(txtUsername.Text, txtPassword.Text);
-            if(loginAttempt != null && loginAttempt.AccountType_id == 2)
+            if(loginAttempt != null && loginAttempt.AccountType_id == 2 && loginAttempt.active == 1)
             {
                 loggedInTable = tableUtil.getTableForAccountId(loginAttempt.id);
                 DialogResult = DialogResult.OK;

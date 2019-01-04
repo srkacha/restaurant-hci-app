@@ -18,6 +18,10 @@ namespace Restaurant.View
         private account loggedInStaff;
         private ItemUtil itemUtil = new ItemUtil();
         private OrderUtil orderUtil = new OrderUtil();
+        private AccountUtil accountUtil = new AccountUtil();
+        private AccountTypeUtil accountTypeUtil = new AccountTypeUtil();
+
+        private List<accounttype> accounttypes = new List<accounttype>();
 
         private static bool orderPollingThreadActive = true;
 
@@ -40,8 +44,15 @@ namespace Restaurant.View
             //loading the order data
             loadOrderData();
 
+            //loading the account data
+            loadAccountData();
+
+            //loading account types
+            loadAccountTypes();
+
             //starting the order polling thread
             startOrderPollingThread();
+
         }
 
         private void startOrderPollingThread()
@@ -58,14 +69,14 @@ namespace Restaurant.View
                             foreach (var order in orders)
                             {
                                 bool found = false;
-                                foreach(var item in orderBindingSource)
+                                foreach (var item in orderBindingSource)
                                 {
                                     if (((order)item).id == order.id)
                                     {
                                         found = true;
                                         break;
                                     }
-                                    
+
                                 }
                                 if (!found)
                                 {
@@ -81,7 +92,7 @@ namespace Restaurant.View
                     }
                 }
             }).Start();
-            
+
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
@@ -108,9 +119,9 @@ namespace Restaurant.View
         private void loadFoodData()
         {
             List<item> foodList = itemUtil.getAlItems();
-            if(foodList != null)
+            if (foodList != null)
             {
-                foreach(var item in foodList)
+                foreach (var item in foodList)
                 {
                     itemBindingSource.Add(item);
                 }
@@ -120,11 +131,35 @@ namespace Restaurant.View
         private void loadOrderData()
         {
             List<order> orderList = orderUtil.getNotAcceptedOrders();
-            if(orderList != null)
+            if (orderList != null)
             {
-                foreach(var order in orderList)
+                foreach (var order in orderList)
                 {
                     orderBindingSource.Add(order);
+                }
+            }
+        }
+
+        private void loadAccountData()
+        {
+            List<account> accounts = accountUtil.getAllAccounts();
+            if (accounts != null)
+            {
+                foreach (var acc in accounts)
+                {
+                    accountBindingSource.Add(acc);
+                }
+            }
+        }
+
+        private void loadAccountTypes()
+        {
+            List<accounttype> acctypes = accountTypeUtil.getAllAccountTypes();
+            if (acctypes != null)
+            {
+                foreach (var acc in acctypes)
+                {
+                    accounttypes.Add(acc);
                 }
             }
         }
@@ -160,7 +195,7 @@ namespace Restaurant.View
                 }
                 else
                 {
-                    if(itemUtil.changeActiveStatus(selectedItem.id, 1))
+                    if (itemUtil.changeActiveStatus(selectedItem.id, 1))
                     {
                         selectedItem.active = 1;
                         dgvFood.Refresh();
@@ -218,7 +253,7 @@ namespace Restaurant.View
         private void button2_Click(object sender, EventArgs e)
         {
             ItemForm form = new ItemForm();
-            if(form.ShowDialog() == DialogResult.OK)
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 refreshItemData();
             }
@@ -234,6 +269,94 @@ namespace Restaurant.View
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     refreshItemData();
+                }
+            }
+        }
+
+        private void dgvAccounts_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (accounttypes.Count > 0)
+            {
+                var grid = (DataGridView)sender;
+                if (grid.Columns[e.ColumnIndex].Name == "VrstaNaloga")
+                {
+                    e.Value = accounttypes.Where(a => a.id == (int)e.Value).First().name;
+                    e.FormattingApplied = true;
+                }
+                if (grid.Columns[e.ColumnIndex].Name == "active")
+                {
+                    e.Value = (sbyte)e.Value == 1 ? "Da" : "Ne";
+                    e.FormattingApplied = true;
+                }
+            }
+        }
+
+        private void btnActivateAccount_Click(object sender, EventArgs e)
+        {
+            if (dgvAccounts.SelectedRows.Count == 1)
+            {
+                DataGridViewRow selectedRow = dgvAccounts.SelectedRows[0];
+                account selectedItem = (account)selectedRow.DataBoundItem;
+                if (selectedItem.active == 1)
+                {
+                    if (accountUtil.changeActiveStatus(selectedItem.id, 0))
+                    {
+                        selectedItem.active = 0;
+                        dgvAccounts.Refresh();
+                        btnActivateAccount.Text = "Aktiviraj nalog";
+                    }
+                }
+                else
+                {
+                    if (accountUtil.changeActiveStatus(selectedItem.id, 1))
+                    {
+                        selectedItem.active = 1;
+                        dgvAccounts.Refresh();
+                        btnActivateAccount.Text = "Deaktiviraj nalog";
+                    }
+                }
+            }
+        }
+
+        private void dgvAccounts_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvAccounts.SelectedRows.Count == 1)
+            {
+                DataGridViewRow selectedRow = dgvAccounts.SelectedRows[0];
+                account selectedItem = (account)selectedRow.DataBoundItem;
+                if (selectedItem.active == 1)
+                {
+                    btnActivateAccount.Text = "Deaktiviraj nalog";
+                }
+                else btnActivateAccount.Text = "Aktiviraj nalog";
+            }
+        }
+
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            AccountForm accountForm = new AccountForm();
+            if(accountForm.ShowDialog() == DialogResult.OK)
+            {
+                refreshAccountData();
+            }
+        }
+
+        private void refreshAccountData()
+        {
+            accountBindingSource.Clear();
+            loadAccountData();
+        }
+
+        private void btnUpdatePassword_Click(object sender, EventArgs e)
+        {
+            if (dgvAccounts.SelectedRows.Count == 1)
+            {
+                DataGridViewRow selectedRow = dgvAccounts.SelectedRows[0];
+                account selectedItem = (account)selectedRow.DataBoundItem;
+                PasswordForm form = new PasswordForm(selectedItem);
+                if(form.ShowDialog() == DialogResult.OK)
+                {
+                    refreshAccountData();
                 }
             }
         }

@@ -23,5 +23,22 @@ namespace Restaurant.Util
                 }
             }
         }
+
+        public bool tableNumberExists(int tableNumber)
+        {
+            using(restaurantEntities context = new restaurantEntities())
+            {
+                try
+                {
+                    return context.table.Where(t => t.number == tableNumber).ToList().Count > 0;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+        }
+
+
     }
 }
