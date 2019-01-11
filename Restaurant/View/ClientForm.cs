@@ -49,6 +49,12 @@ namespace Restaurant.View
                     if (orderUtil.isOrderAccepted(lastOrderId))
                     {
                         new InfoForm($"Narudzba sa brojem {lastOrderId} je prihvacena.").ShowDialog();
+
+                        //invoke calls a delegate on the thread that controls the label, the main UI thread
+                        lblOrderStatus.Invoke((MethodInvoker)delegate
+                        {
+                            lblOrderStatus.Text = "Status narudzbe: Izrada";
+                        });
                         lastOrderId = -1;
                     }
                     Thread.Sleep(1000);
@@ -113,7 +119,7 @@ namespace Restaurant.View
                 lblItemName.Text = selectedItem.name;
                 txtItemDescription.Clear();
                 txtItemDescription.Text = selectedItem.description;
-                lblItemPrice.Text = $"Cijena: {selectedItem.price} KM";
+                lblItemPrice.Text = $"Cijena: {selectedItem.price} KM/kom";
                 try
                 {
                     pbItemImage.Image = Image.FromFile(selectedItem.image_path);
@@ -230,17 +236,23 @@ namespace Restaurant.View
         {
             if (orderItemCustomBindingSource.Count > 0)
             {
-                int orderNumber = 0;
-                if ((orderNumber = createOrder()) > 0)
+                if (!lblOrderStatus.Text.Contains("Obrada"))
                 {
-                    new InfoForm($"Broj vase narudzbe je {orderNumber}. Prijatno!").ShowDialog();
-                    //setting the last order id
-                    lastOrderId = orderNumber;
-                    orderItemCustomBindingSource.Clear();
-                    updateTotalPrice();
-                    nudOrderQuantity.Value = 1;
+                    int orderNumber = 0;
+                    if ((orderNumber = createOrder()) > 0)
+                    {
+                        new InfoForm($"Broj vase narudzbe je {orderNumber}. Prijatno!").ShowDialog();
+                        lblOrderStatus.Text = "Status narudzbe: Obrada";
+                        //setting the last order id
+                        lastOrderId = orderNumber;
+                        orderItemCustomBindingSource.Clear();
+                        updateTotalPrice();
+                        nudOrderQuantity.Value = 1;
+                    }
+                    else new InfoForm("Desio se problem sa kreiranjem narudzbe, molimo Vas pokusajte ponovno.").ShowDialog();
                 }
-                else new InfoForm("Desio se problem sa kreiranjem narudzbe, molimo Vas pokusajte ponovno.").ShowDialog();
+                else new InfoForm("Prethodna narudzba jos nije obradjena, molimo Vas da sacekate.").ShowDialog();
+                
             }
             else new InfoForm("Morate imati bar jednu stavku narudzbe da biste uspjesno kreirali narudzbu.").ShowDialog();
         }

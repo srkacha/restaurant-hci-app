@@ -49,11 +49,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlSelection = new System.Windows.Forms.Panel();
+            this.btnOrder = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnMenu = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblTableNumber = new System.Windows.Forms.Label();
             this.tcTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.pbItemImage = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnItemAdd = new System.Windows.Forms.Button();
             this.nudItemQuantity = new System.Windows.Forms.NumericUpDown();
@@ -76,20 +80,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dgvOrderItems = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btnOrder = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnMenu = new System.Windows.Forms.Button();
-            this.pbItemImage = new System.Windows.Forms.PictureBox();
+            this.lblOrderStatus = new System.Windows.Forms.Label();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalPriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderItemCustomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.tcTabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbItemImage)).BeginInit();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudItemQuantity)).BeginInit();
             this.panel3.SuspendLayout();
@@ -99,8 +102,6 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrderQuantity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbItemImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderItemCustomBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,11 +127,58 @@
             this.pnlSelection.Size = new System.Drawing.Size(23, 76);
             this.pnlSelection.TabIndex = 4;
             // 
+            // btnOrder
+            // 
+            this.btnOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnOrder.FlatAppearance.BorderSize = 0;
+            this.btnOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOrder.Font = new System.Drawing.Font("Century Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOrder.ForeColor = System.Drawing.Color.White;
+            this.btnOrder.Image = global::Restaurant.Properties.Resources.icons8_todo_list_64;
+            this.btnOrder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOrder.Location = new System.Drawing.Point(24, 332);
+            this.btnOrder.Name = "btnOrder";
+            this.btnOrder.Size = new System.Drawing.Size(246, 76);
+            this.btnOrder.TabIndex = 4;
+            this.btnOrder.Text = "Narudžba";
+            this.btnOrder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnOrder.UseVisualStyleBackColor = false;
+            this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Restaurant.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(220, 220);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnMenu
+            // 
+            this.btnMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenu.FlatAppearance.BorderSize = 0;
+            this.btnMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenu.Font = new System.Drawing.Font("Century Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenu.ForeColor = System.Drawing.Color.White;
+            this.btnMenu.Image = global::Restaurant.Properties.Resources.icons8_restaurant_menu_64;
+            this.btnMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMenu.Location = new System.Drawing.Point(24, 250);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(246, 76);
+            this.btnMenu.TabIndex = 2;
+            this.btnMenu.Text = "Meni";
+            this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnMenu.UseVisualStyleBackColor = false;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.panel2.Controls.Add(this.lblOrderStatus);
             this.panel2.Controls.Add(this.lblTableNumber);
             this.panel2.Location = new System.Drawing.Point(264, 0);
             this.panel2.Name = "panel2";
@@ -185,6 +233,19 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(365, 329);
             this.panel8.TabIndex = 26;
+            // 
+            // pbItemImage
+            // 
+            this.pbItemImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbItemImage.BackColor = System.Drawing.Color.White;
+            this.pbItemImage.Location = new System.Drawing.Point(15, 16);
+            this.pbItemImage.Name = "pbItemImage";
+            this.pbItemImage.Size = new System.Drawing.Size(324, 295);
+            this.pbItemImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbItemImage.TabIndex = 23;
+            this.pbItemImage.TabStop = false;
             // 
             // panel4
             // 
@@ -556,64 +617,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // btnOrder
+            // lblOrderStatus
             // 
-            this.btnOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnOrder.FlatAppearance.BorderSize = 0;
-            this.btnOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOrder.Font = new System.Drawing.Font("Century Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOrder.ForeColor = System.Drawing.Color.White;
-            this.btnOrder.Image = global::Restaurant.Properties.Resources.icons8_todo_list_64;
-            this.btnOrder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOrder.Location = new System.Drawing.Point(24, 332);
-            this.btnOrder.Name = "btnOrder";
-            this.btnOrder.Size = new System.Drawing.Size(246, 76);
-            this.btnOrder.TabIndex = 4;
-            this.btnOrder.Text = "Narudžba";
-            this.btnOrder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnOrder.UseVisualStyleBackColor = false;
-            this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Restaurant.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(220, 220);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenu.FlatAppearance.BorderSize = 0;
-            this.btnMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenu.Font = new System.Drawing.Font("Century Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenu.ForeColor = System.Drawing.Color.White;
-            this.btnMenu.Image = global::Restaurant.Properties.Resources.icons8_restaurant_menu_64;
-            this.btnMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMenu.Location = new System.Drawing.Point(24, 250);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(246, 76);
-            this.btnMenu.TabIndex = 2;
-            this.btnMenu.Text = "Meni";
-            this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnMenu.UseVisualStyleBackColor = false;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
-            // 
-            // pbItemImage
-            // 
-            this.pbItemImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbItemImage.BackColor = System.Drawing.Color.White;
-            this.pbItemImage.Location = new System.Drawing.Point(15, 16);
-            this.pbItemImage.Name = "pbItemImage";
-            this.pbItemImage.Size = new System.Drawing.Size(324, 295);
-            this.pbItemImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbItemImage.TabIndex = 23;
-            this.pbItemImage.TabStop = false;
+            this.lblOrderStatus.AutoSize = true;
+            this.lblOrderStatus.Font = new System.Drawing.Font("Century Gothic", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrderStatus.ForeColor = System.Drawing.Color.White;
+            this.lblOrderStatus.Location = new System.Drawing.Point(523, 12);
+            this.lblOrderStatus.Name = "lblOrderStatus";
+            this.lblOrderStatus.Size = new System.Drawing.Size(357, 37);
+            this.lblOrderStatus.TabIndex = 1;
+            this.lblOrderStatus.Text = "Status narudzbe: Izrada";
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -656,6 +669,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tcTabs);
+            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "ClientForm";
             this.ShowIcon = false;
@@ -664,12 +678,14 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientForm_FormClosing);
             this.Load += new System.EventHandler(this.ClientForm_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tcTabs.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.panel8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbItemImage)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudItemQuantity)).EndInit();
@@ -683,8 +699,6 @@
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrderQuantity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrderItems)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbItemImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderItemCustomBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -730,5 +744,6 @@
         private System.Windows.Forms.Label lblTotalPrice;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label lblOrderStatus;
     }
 }
