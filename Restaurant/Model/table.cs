@@ -27,5 +27,10 @@ namespace Restaurant.Model
         public virtual account account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> order { get; set; }
+
+        public override string ToString()
+        {
+            return $"{number}";
+        }
     }
 }

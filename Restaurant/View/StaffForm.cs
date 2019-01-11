@@ -20,8 +20,10 @@ namespace Restaurant.View
         private OrderUtil orderUtil = new OrderUtil();
         private AccountUtil accountUtil = new AccountUtil();
         private AccountTypeUtil accountTypeUtil = new AccountTypeUtil();
+        private TableUtil tableUtil = new TableUtil();
 
         private List<accounttype> accounttypes = new List<accounttype>();
+        private List<table> tables = new List<table>();
 
         private static bool orderPollingThreadActive = true;
 
@@ -49,6 +51,9 @@ namespace Restaurant.View
 
             //loading account types
             loadAccountTypes();
+
+            //loading the table data
+            loadTableData();
 
             //starting the order polling thread
             startOrderPollingThread();
@@ -161,6 +166,21 @@ namespace Restaurant.View
                 {
                     accounttypes.Add(acc);
                 }
+            }
+        }
+
+        private void loadTableData()
+        {
+            List<table> tableData = tableUtil.getAllTables();
+            if(tableData != null)
+            {
+                foreach(var table in tableData)
+                {
+                    tables.Add(table);
+                    cmbTableNumber.Items.Add(table);
+                }
+
+                
             }
         }
 
@@ -357,6 +377,57 @@ namespace Restaurant.View
                 if(form.ShowDialog() == DialogResult.OK)
                 {
                     refreshAccountData();
+                }
+            }
+        }
+
+        private void dgvOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var grid = (DataGridView)sender;
+            if (grid.Columns[e.ColumnIndex].Name == "accepted")
+            {
+                e.Value = (sbyte)e.Value == 1 ? "Da" : "Ne";
+                e.FormattingApplied = true;
+            }
+            if (grid.Columns[e.ColumnIndex].Name == "Table_id")
+            {
+                e.Value = $"{tableUtil.getTableNumberForTableId((int)e.Value)}";
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void chbAcceptedOrders_CheckedChanged(object sender, EventArgs e)
+        {
+            orderBindingSource.Clear();
+            loadFilteredOrders();
+        }
+
+        private void cmbTableNumber_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            orderBindingSource.Clear();
+            loadFilteredOrders();
+        }
+
+        private void loadFilteredOrders()
+        {
+            List<order> orders = orderUtil.getAllOrders();
+            if(orders != null)
+            {
+                if(chbAcceptedOrders.Checked == false)
+                {
+                    orders = orders.Where(o => o.accepted == 0).ToList();
+                }
+
+                //table filtering
+                if(!cmbTableNumber.Text.Equals("Svi stolovi") && !cmbTableNumber.Text.Equals(""))
+                {
+                    table selectedTable = (table)cmbTableNumber.SelectedItem;
+                    orders = orders.Where(o => o.Table_id == selectedTable.id).ToList();
+                }
+
+                foreach(var o in orders)
+                {
+                    orderBindingSource.Add(o);
                 }
             }
         }

@@ -62,9 +62,13 @@
             this.btnOrderDetails = new System.Windows.Forms.Button();
             this.btnAcceptOrder = new System.Windows.Forms.Button();
             this.dgvOrders = new System.Windows.Forms.DataGridView();
+            this.tcTabs = new System.Windows.Forms.TabControl();
+            this.chbAcceptedOrders = new System.Windows.Forms.CheckBox();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Table_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tcTabs = new System.Windows.Forms.TabControl();
+            this.accepted = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbTableNumber = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -468,6 +472,9 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.SeaShell;
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.cmbTableNumber);
+            this.tabPage1.Controls.Add(this.chbAcceptedOrders);
             this.tabPage1.Controls.Add(this.panel3);
             this.tabPage1.Controls.Add(this.dgvOrders);
             this.tabPage1.Controls.Add(this.lblItemName);
@@ -551,7 +558,8 @@
             this.dateDataGridViewTextBoxColumn,
             this.timeDataGridViewTextBoxColumn,
             this.totalDataGridViewTextBoxColumn,
-            this.Table_id});
+            this.Table_id,
+            this.accepted});
             this.dgvOrders.DataSource = this.orderBindingSource;
             dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
@@ -561,28 +569,15 @@
             dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvOrders.DefaultCellStyle = dataGridViewCellStyle18;
-            this.dgvOrders.Location = new System.Drawing.Point(7, 9);
+            this.dgvOrders.Location = new System.Drawing.Point(7, 68);
             this.dgvOrders.MultiSelect = false;
             this.dgvOrders.Name = "dgvOrders";
             this.dgvOrders.ReadOnly = true;
             this.dgvOrders.RowHeadersVisible = false;
             this.dgvOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOrders.Size = new System.Drawing.Size(900, 565);
+            this.dgvOrders.Size = new System.Drawing.Size(900, 506);
             this.dgvOrders.TabIndex = 21;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "id";
-            this.Column1.HeaderText = "Broj narudzbe";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Table_id
-            // 
-            this.Table_id.DataPropertyName = "Table_id";
-            this.Table_id.HeaderText = "Broj stola";
-            this.Table_id.Name = "Table_id";
-            this.Table_id.ReadOnly = true;
+            this.dgvOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOrders_CellFormatting);
             // 
             // tcTabs
             // 
@@ -597,6 +592,66 @@
             this.tcTabs.SelectedIndex = 0;
             this.tcTabs.Size = new System.Drawing.Size(922, 728);
             this.tcTabs.TabIndex = 5;
+            // 
+            // chbAcceptedOrders
+            // 
+            this.chbAcceptedOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbAcceptedOrders.AutoSize = true;
+            this.chbAcceptedOrders.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbAcceptedOrders.Location = new System.Drawing.Point(578, 18);
+            this.chbAcceptedOrders.Name = "chbAcceptedOrders";
+            this.chbAcceptedOrders.Size = new System.Drawing.Size(329, 29);
+            this.chbAcceptedOrders.TabIndex = 29;
+            this.chbAcceptedOrders.Text = "Prikazi prihvacene narudzbe";
+            this.chbAcceptedOrders.UseVisualStyleBackColor = true;
+            this.chbAcceptedOrders.CheckedChanged += new System.EventHandler(this.chbAcceptedOrders_CheckedChanged);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "id";
+            this.Column1.HeaderText = "Broj";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Table_id
+            // 
+            this.Table_id.DataPropertyName = "Table_id";
+            this.Table_id.HeaderText = "Broj stola";
+            this.Table_id.Name = "Table_id";
+            this.Table_id.ReadOnly = true;
+            // 
+            // accepted
+            // 
+            this.accepted.DataPropertyName = "accepted";
+            this.accepted.HeaderText = "Prihvacena";
+            this.accepted.Name = "accepted";
+            this.accepted.ReadOnly = true;
+            // 
+            // cmbTableNumber
+            // 
+            this.cmbTableNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTableNumber.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbTableNumber.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbTableNumber.FormattingEnabled = true;
+            this.cmbTableNumber.Items.AddRange(new object[] {
+            "Svi stolovi"});
+            this.cmbTableNumber.Location = new System.Drawing.Point(123, 16);
+            this.cmbTableNumber.Name = "cmbTableNumber";
+            this.cmbTableNumber.Size = new System.Drawing.Size(183, 32);
+            this.cmbTableNumber.TabIndex = 30;
+            this.cmbTableNumber.SelectedIndexChanged += new System.EventHandler(this.cmbTableNumber_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(9, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 25);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Broj stola";
             // 
             // dateDataGridViewTextBoxColumn
             // 
@@ -722,11 +777,6 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Button btnActivateItem;
         private System.Windows.Forms.DataGridView dgvOrders;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Table_id;
         private System.Windows.Forms.BindingSource orderBindingSource;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnAcceptOrder;
@@ -745,5 +795,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn usernameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn VrstaNaloga;
         private System.Windows.Forms.DataGridViewTextBoxColumn active;
+        private System.Windows.Forms.CheckBox chbAcceptedOrders;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Table_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn accepted;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbTableNumber;
     }
 }

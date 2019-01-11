@@ -39,6 +39,36 @@ namespace Restaurant.Util
             }
         }
 
+        public List<table> getAllTables()
+        {
+            using(restaurantEntities context = new restaurantEntities())
+            {
+                try
+                {
+                    return context.table.ToList();
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public int getTableNumberForTableId(int tableId)
+        {
+            using(restaurantEntities context = new restaurantEntities())
+            {
+                try
+                {
+                    return context.table.Where(t => t.id == tableId).First().number;
+                }
+                catch
+                {
+                    return -1;
+                }
+            }
+        }
+
 
     }
 }
