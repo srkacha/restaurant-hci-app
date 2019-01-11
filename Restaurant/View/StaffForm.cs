@@ -232,9 +232,22 @@ namespace Restaurant.View
             {
                 DataGridViewRow selectedRow = dgvOrders.SelectedRows[0];
                 order selectedItem = (order)selectedRow.DataBoundItem;
-                if (orderUtil.acceptOrder(selectedItem.id))
+                if(selectedItem.accepted == 0)
                 {
-                    orderBindingSource.Remove(selectedItem);
+                    if (orderUtil.acceptOrder(selectedItem.id))
+                    {
+                        selectedItem.accepted = 1;
+                        if(chbAcceptedOrders.Checked == false)
+                        {
+                            orderBindingSource.Remove(selectedItem);
+                        }
+                        dgvOrders.Refresh();
+
+                    }
+                }
+                else
+                {
+                    new InfoForm("Narudzba je vec prihvacena.").ShowDialog();
                 }
             }
         }
@@ -317,24 +330,28 @@ namespace Restaurant.View
             {
                 DataGridViewRow selectedRow = dgvAccounts.SelectedRows[0];
                 account selectedItem = (account)selectedRow.DataBoundItem;
-                if (selectedItem.active == 1)
+                if (selectedItem.id != loggedInStaff.id)
                 {
-                    if (accountUtil.changeActiveStatus(selectedItem.id, 0))
+                    if (selectedItem.active == 1)
                     {
-                        selectedItem.active = 0;
-                        dgvAccounts.Refresh();
-                        btnActivateAccount.Text = "Aktiviraj nalog";
+                        if (accountUtil.changeActiveStatus(selectedItem.id, 0))
+                        {
+                            selectedItem.active = 0;
+                            dgvAccounts.Refresh();
+                            btnActivateAccount.Text = "Aktiviraj nalog";
+                        }
+                    }
+                    else
+                    {
+                        if (accountUtil.changeActiveStatus(selectedItem.id, 1))
+                        {
+                            selectedItem.active = 1;
+                            dgvAccounts.Refresh();
+                            btnActivateAccount.Text = "Deaktiviraj nalog";
+                        }
                     }
                 }
-                else
-                {
-                    if (accountUtil.changeActiveStatus(selectedItem.id, 1))
-                    {
-                        selectedItem.active = 1;
-                        dgvAccounts.Refresh();
-                        btnActivateAccount.Text = "Deaktiviraj nalog";
-                    }
-                }
+                else new InfoForm("Ne mozete deaktivirati vlastiti nalog.").ShowDialog();
             }
         }
 
